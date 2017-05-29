@@ -776,6 +776,8 @@ iptables_fw_init(void)
 
 	debug(LOG_ERR, "step7");
 
+	debug(LOG_ERR, config->no_auth);
+
 	if( config->no_auth != 0 ) {
 		debug(LOG_ERR, "step7.1");
 		debug(LOG_DEBUG, "No auth set");
