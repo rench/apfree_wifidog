@@ -260,7 +260,7 @@ iptables_do_append_command(void *handle, const char *format, ...)
 
 	rc = fw3_ipt_rule_append(handle, fmt_cmd);
 
-	debug(LOG_DEBUG, &handle);
+	debug(LOG_DEBUG, "xxx : %s ", &handle);
 
 	debug(LOG_DEBUG, "xxx : %s ", fmt_cmd);
 

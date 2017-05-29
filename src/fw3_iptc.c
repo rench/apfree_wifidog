@@ -734,14 +734,15 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 			if (!r->h)
 			{
 				enum fw3_table table = FW3_TABLE_FILTER;
-
+				debug(LOG_ERR, "in 1");
 				for (i = 0; fw3_keywords[i].name; i++)
 					if (strcasecmp(optarg, fw3_keywords[i].name) == 0)
 						table = fw3_keywords[i].opcode;
-
+				debug(LOG_ERR, "in 2");
 				handle = fw3_ipt_open(table);
 				if (handle)
 					r->h = handle;
+				debug(LOG_ERR, "in 3");
 			}
 
 			break;
