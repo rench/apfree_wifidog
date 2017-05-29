@@ -705,6 +705,8 @@ iptables_fw_init(void)
 
 	struct fw3_ipt_handle *handle;
 
+	debug(LOG_ERR, "step1");
+
 	// liudf added 20160127
 	if(access(fw_init_script, F_OK|X_OK)) {
 		// need to create it
@@ -712,6 +714,8 @@ iptables_fw_init(void)
 	} else {
 		// execut fw_init_script
 	}
+
+	debug(LOG_ERR, "step2");
 
 	config = config_get_config();
 	gw_port = config->gw_port;
@@ -730,6 +734,7 @@ iptables_fw_init(void)
 		return 0;
 	}
 
+	debug(LOG_ERR, "step3");
 	// add ipset support
 	ipset_do_command("create " CHAIN_TRUSTED " hash:mac timeout 0 ");
 	ipset_do_command("create " CHAIN_ROAM " hash:mac timeout 0 ");
@@ -738,6 +743,7 @@ iptables_fw_init(void)
 	ipset_do_command("create " CHAIN_INNER_DOMAIN_TRUSTED " hash:ip ");
 	ipset_do_command("create " CHAIN_IPSET_TDOMAIN " hash:ip ");
 
+	debug(LOG_ERR, "step4");
 
 	/*
 	 *
@@ -747,6 +753,8 @@ iptables_fw_init(void)
 
 	handle = fw3_ipt_open(FW3_TABLE_MANGLE);
 
+	debug(LOG_ERR, "step5");
+
 	/* Create new chains */
 	// liudf added 20160106
 	iptables_do_append_command(handle, "-t mangle -N " CHAIN_ROAM);
@@ -754,6 +762,9 @@ iptables_fw_init(void)
 	iptables_do_append_command(handle, "-t mangle -N " CHAIN_OUTGOING);
 	iptables_do_append_command(handle, "-t mangle -N " CHAIN_INCOMING);
 	iptables_do_append_command(handle, "-t mangle -N " CHAIN_TO_PASS);
+
+	debug(LOG_ERR, "step6");
+
 	if (got_authdown_ruleset)
 		iptables_do_append_command(handle, "-t mangle -N " CHAIN_AUTH_IS_DOWN);
 	/* Assign links and rules to these new chains */
@@ -762,6 +773,9 @@ iptables_fw_init(void)
 	// liudf added 20160106
 	iptables_do_append_command(handle, "-t mangle -I PREROUTING 1 -i %s -j " CHAIN_TO_PASS, config->gw_interface);
 
+
+	debug(LOG_ERR, "step7");
+
 	if( config->no_auth != 0 ) {
 		debug(LOG_DEBUG, "No auth set");
 		iptables_do_append_command(handle, "-t mangle -A " CHAIN_TO_PASS " -j MARK --set-mark %d", FW_MARK_KNOWN);
@@ -769,6 +783,9 @@ iptables_fw_init(void)
 
 	iptables_do_append_command(handle, "-t mangle -I PREROUTING 1 -i %s -j " CHAIN_ROAM, config->gw_interface);
 	iptables_do_append_command(handle, "-t mangle -A " CHAIN_ROAM " -m set --match-set " CHAIN_ROAM " src -j MARK --set-mark %d", FW_MARK_KNOWN);
+
+
+	debug(LOG_ERR, "step8");
 
 	if (got_authdown_ruleset)
 		iptables_do_append_command(handle, "-t mangle -I PREROUTING 1 -i %s -j " CHAIN_AUTH_IS_DOWN, config->gw_interface);
@@ -781,7 +798,7 @@ iptables_fw_init(void)
 	fw3_ipt_commit(handle);
 	fw3_ipt_close(handle);
 
-
+	debug(LOG_ERR, "step9");
 	/*
 	 *
 	 * Everything in the NAT table
@@ -932,6 +949,8 @@ iptables_fw_init(void)
 
 	f_fw_init_close();
 	//<<< liudf added end
+
+	debug(LOG_ERR, "step10");
 
 	return 1;
 }
