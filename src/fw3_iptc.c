@@ -834,7 +834,7 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 
 		inv = false;
 	}
-	LOG_DEBUG(DEBUG, "free------1");
+	debug(LOG_ERR, "free------1");
 	for (m = r->matches; m; m = m->next)
 		xtables_option_mfcall(m->match);
 
@@ -843,7 +843,7 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 
 	rule = fw3_ipt_rule_build(r);
 
-	LOG_DEBUG(DEBUG, "free------2");
+	debug(LOG_ERR, "free------2");
 	if (command == 'A')
 	{
 		rv = iptc_append_entry(chain, rule, r->h->handle);
@@ -877,7 +877,7 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 	}
 
 	free(rule);
-	LOG_DEBUG(DEBUG, "free------");
+	debug(LOG_ERR, "free------");
 	goto free;
 
 free:
