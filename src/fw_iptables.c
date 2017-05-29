@@ -777,11 +777,15 @@ iptables_fw_init(void)
 	debug(LOG_ERR, "step7");
 
 	if( config->no_auth != 0 ) {
+		debug(LOG_ERR, "step7.1");
 		debug(LOG_DEBUG, "No auth set");
 		iptables_do_append_command(handle, "-t mangle -A " CHAIN_TO_PASS " -j MARK --set-mark %d", FW_MARK_KNOWN);
+		debug(LOG_ERR, "step7.2");
 	}
 
+	debug(LOG_ERR, "step7.3");
 	iptables_do_append_command(handle, "-t mangle -I PREROUTING 1 -i %s -j " CHAIN_ROAM, config->gw_interface);
+	debug(LOG_ERR, "step7.4");
 	iptables_do_append_command(handle, "-t mangle -A " CHAIN_ROAM " -m set --match-set " CHAIN_ROAM " src -j MARK --set-mark %d", FW_MARK_KNOWN);
 
 
