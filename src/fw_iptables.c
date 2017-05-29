@@ -260,6 +260,12 @@ iptables_do_append_command(void *handle, const char *format, ...)
 
 	rc = fw3_ipt_rule_append(handle, fmt_cmd);
 
+	debug(LOG_DEBUG, handle);
+
+	debug(LOG_DEBUG, fmt_cmd);
+
+	debug(LOG_DEBUG, rc);
+
 	if (rc != 1) {
 		// If quiet, do not display the error
 		if (fw_quiet == 0)
@@ -779,7 +785,7 @@ iptables_fw_init(void)
 	debug(LOG_ERR, config->no_auth);
 	debug(LOG_ERR, CHAIN_ROAM);
 
-	debug(LOG_ERR, config->gw_interface);
+	debug(LOG_ERR, CHAIN_ROAM);
 
 	if( config->no_auth != 0 ) {
 		debug(LOG_ERR, "step7.1");
