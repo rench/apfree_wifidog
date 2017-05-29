@@ -777,6 +777,9 @@ iptables_fw_init(void)
 	debug(LOG_ERR, "step7");
 
 	debug(LOG_ERR, config->no_auth);
+	debug(LOG_ERR, CHAIN_ROAM);
+
+	debug(LOG_ERR, config->gw_interface);
 
 	if( config->no_auth != 0 ) {
 		debug(LOG_ERR, "step7.1");
