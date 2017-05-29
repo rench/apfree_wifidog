@@ -731,6 +731,7 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 		{
 		case 't':
 			debug(LOG_ERR, "in t");
+			debug(LOG_ERR, r->h);
 			if (!r->h)
 			{
 				enum fw3_table table = FW3_TABLE_FILTER;
@@ -744,7 +745,7 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 					r->h = handle;
 				debug(LOG_ERR, "in 3");
 			}
-
+			debug(LOG_ERR, "in 4");
 			break;
 
 		case 'N':
