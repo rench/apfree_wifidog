@@ -730,6 +730,7 @@ __fw3_ipt_rule_append(struct fw3_ipt_rule *r)
 		switch (optc)
 		{
 		case 't':
+			debug(LOG_ERR, "in t");
 			if (!r->h)
 			{
 				enum fw3_table table = FW3_TABLE_FILTER;
